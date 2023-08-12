@@ -158,6 +158,8 @@ export interface BotEvents {
 }
 
 export interface Bot extends TypedEmitter<BotEvents> {
+  blockPhysics?: boolean
+  movementRedirection?: Function
   username: string
   protocolVersion: string
   majorVersion: string
