@@ -158,10 +158,18 @@ export interface BotEvents {
   teamUpdated: (team: Team) => Promise<void> | void
   teamMemberAdded: (team: Team) => Promise<void> | void
   teamMemberRemoved: (team: Team) => Promise<void> | void
+  bossBarCreated: (bossBar: BossBar) => Promise<void> | void
   bossBarDeleted: (bossBar: BossBar) => Promise<void> | void
   bossBarUpdated: (bossBar: BossBar) => Promise<void> | void
-  resourcePack: (url: string, hash: string) => Promise<void> | void
+  resourcePack: (url: string, hash?: string, uuid?: string) => Promise<void> | void
   particle: (particle: Particle) => Promise<void> | void
+}
+
+export interface CommandBlockOptions {
+  mode: number,
+  trackOutput: boolean,
+  conditional: boolean,
+  alwaysActive: boolean
 }
 
 export interface Bot extends TypedEmitter<BotEvents> {
@@ -200,7 +208,7 @@ export interface Bot extends TypedEmitter<BotEvents> {
   teamMap: { [name: string]: Team }
   controlState: ControlStateStatus
   creative: creativeMethods
-  world: world.World
+  world: world.WorldSync
   _client: Client
   heldItem: Item | null
   usingHeldItem: boolean
@@ -380,7 +388,9 @@ export interface Bot extends TypedEmitter<BotEvents> {
     times?: number
   ) => Promise<void>
 
-  setCommandBlock: (pos: Vec3, command: string, trackOutput: boolean) => void
+  
+  
+  setCommandBlock: (pos: Vec3, command: string, options: CommandBlockOptions) => void
 
   clickWindow: (
     slot: number,
@@ -458,6 +468,7 @@ export interface GameState {
   dimension: Dimension
   difficulty: Difficulty
   maxPlayers: number
+  serverBrand: string
 }
 
 export type LevelType =

@@ -1,7 +1,7 @@
 const { Vec3 } = require('vec3')
 
 const { spawn } = require('child_process')
-const { once } = require('events')
+const { once } = require('../../../lib/promise_utils')
 const process = require('process')
 const assert = require('assert')
 const { sleep, onceWithCleanup, withTimeout } = require('../../../lib/promise_utils')
@@ -28,7 +28,7 @@ function inject (bot) {
     return new Promise((resolve) => { setTimeout(resolve, ms) })
   }
 
-  bot.test.awaitItemRecieved = async (command) => {
+  bot.test.awaitItemReceived = async (command) => {
     const p = once(bot.inventory, 'updateSlot')
     bot.chat(command)
     await p // await getting the item
